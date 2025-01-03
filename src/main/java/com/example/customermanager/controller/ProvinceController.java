@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/provinces")
+@RequestMapping("/province")
 public class ProvinceController {
     @Autowired
     private IProvinceService provinceService;
@@ -21,16 +21,16 @@ public class ProvinceController {
 
     @GetMapping
     public ModelAndView listProvinces() {
-        ModelAndView modelAndView = new ModelAndView("provinces/list");
-        Iterable<ProvinceDTO> provinces = provinceService.countCustomerByProvice();
-        modelAndView.addObject("provinces", provinces);
+        ModelAndView modelAndView = new ModelAndView("province/list");
+        Iterable<ProvinceDTO> province = provinceService.countCustomerByProvice();
+        modelAndView.addObject("province", province);
         return modelAndView;
     }
 
     // Create
     @GetMapping("/create")
     public ModelAndView showCreateForm() {
-        ModelAndView modelAndView = new ModelAndView("provinces/create");
+        ModelAndView modelAndView = new ModelAndView("province/create");
         modelAndView.addObject("province", new Province());
         return modelAndView;
     }
@@ -39,7 +39,7 @@ public class ProvinceController {
     public String saveProvince(@ModelAttribute("province") Province province, RedirectAttributes redirectAttributes) {
         provinceService.save(province);
         redirectAttributes.addFlashAttribute("message", "Added a new province successfully");
-        return "redirect:/provinces";
+        return "redirect:/province";
     }
 
     // Update
@@ -65,23 +65,14 @@ public class ProvinceController {
         } else {
             redirectAttributes.addFlashAttribute("error", "Province not found");
         }
-        return "redirect:/provinces";
+        return "redirect:/province";
     }
 
     // Delete
-    @DeleteMapping("/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteProvince(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        Optional<Province> province = provinceService.findById(id);
-        if (province.isPresent()) {
-            try {
-                provinceService.remove(id);
-                redirectAttributes.addFlashAttribute("message", "Deleted province successfully");
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("error", "Cannot delete province. It may have associated customers.");
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Province not found");
-        }
-        return "redirect:/provinces";
+        provinceService.remove(id);
+        redirectAttributes.addFlashAttribute("message", "Delete province successfully");
+        return "redirect:/province";
     }
 }

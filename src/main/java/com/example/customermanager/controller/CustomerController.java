@@ -5,7 +5,6 @@ import com.example.customermanager.model.Province;
 import com.example.customermanager.service.ICustomerService;
 import com.example.customermanager.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

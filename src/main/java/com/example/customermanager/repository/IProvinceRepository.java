@@ -14,12 +14,12 @@ import java.util.Optional;
 
 public interface IProvinceRepository extends PagingAndSortingRepository<Province, Long> {
     
-    @Query(value = "SELECT p.name as name, COUNT(c.id) as number FROM provinces p LEFT JOIN customers c ON p.id = c.province_id GROUP BY p.name", nativeQuery = true)
+    @Query(value = "SELECT p.name as name, COUNT(c.id) as number FROM province p LEFT JOIN customer c ON p.id = c.province_id GROUP BY p.name", nativeQuery = true)
     Iterable<ICountCustomer> getCountCustomers();
 
     Page<Province> findAll(Pageable pageable);
 
-    @Query(value = "SELECT p.id as id, p.name as name, COUNT(c.id) as count FROM provinces p LEFT JOIN customers c ON p.id = c.province_id GROUP BY p.id, p.name", nativeQuery = true)
+    @Query(value = "SELECT p.id as id, p.name as name, COUNT(c.id) as count FROM province p LEFT JOIN customer c ON p.id = c.province_id GROUP BY p.id, p.name", nativeQuery = true)
     Iterable<ProvinceDTO> countCustomerByProvince();
 
     @Modifying
