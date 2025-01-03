@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All Customers</title>
+</head>
+<body>
+<a href="/customers/create">Create new customer</a>
+<h1>All Customers</h1>
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Email</th>
+    <th>Update</th>
+    <th>Delete</th>
+  </tr>
+  <th:block th:each="customer : ${customers}">
+    <tr>
+      <td th:text="${customer.firstName}"></td>
+      <td th:text="${customer.lastName}"></td>
+      <td th:text="${customer.getProvince() != null ? customer.getProvince().getName() : 'N/A'}"></td>
+      <td><a th:href="@{/customers/update/__${customer.id}__ }">Update</a></td>
+      <td><a th:href="@{/customers/delete/__${customer.id}__ }">Delete</a></td>
+    </tr>
+  </th:block>
+</table>
+<div>
+  <a th:if="${customers.hasPrevious()}" th:href="@{'/customers'(page=${customers.number - 1})}">Previous</a>
+  <span th:text="${customers.number + 1}"></span>/
+  <span th:text="${customers.totalPages}"></span>
+  <a th:if="${customers.hasNext()}" th:href="@{'/customers'(page=${customers.number + 1})}">Next</a>
+</div>
+
+<a href="/provinces">Province list</a>
+</body>
+</html>
